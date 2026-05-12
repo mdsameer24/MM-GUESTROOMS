@@ -14,7 +14,8 @@ export const BookingProvider = ({ children }) => {
   
   // Search and Filter State
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('Top Picks');
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [priceSort, setPriceSort] = useState('none');
 
   // Fetch Rooms
   useEffect(() => {
@@ -55,13 +56,21 @@ export const BookingProvider = ({ children }) => {
   }, [fetchUserBookings]);
 
   const filteredRooms = useMemo(() => {
-    return rooms.filter(room => {
+    let result = rooms.filter(room => {
       const matchesSearch = room.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           room.location.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = activeCategory === 'Top Picks' ? true : room.category === activeCategory;
+      const matchesCategory = activeCategory === 'All' ? true : room.category === activeCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [rooms, searchQuery, activeCategory]);
+
+    if (priceSort === 'low-high') {
+      result = result.sort((a, b) => a.price - b.price);
+    } else if (priceSort === 'high-low') {
+      result = result.sort((a, b) => b.price - a.price);
+    }
+
+    return result;
+  }, [rooms, searchQuery, activeCategory, priceSort]);
 
   const getRoomById = (id) => rooms.find(r => r.id === String(id));
 
@@ -110,6 +119,16 @@ export const BookingProvider = ({ children }) => {
     }
   };
 
+  const getAllBookingsAdmin = async () => {
+    try {
+      const response = await apiClient.get('/admin/bookings');
+      return response.data;
+    } catch (error) {
+      console.error('Failed to fetch admin bookings', error);
+      throw error;
+    }
+  };
+
   const value = {
     rooms,
     filteredRooms,
@@ -118,11 +137,14 @@ export const BookingProvider = ({ children }) => {
     setSearchQuery,
     activeCategory,
     setActiveCategory,
+    priceSort,
+    setPriceSort,
     getRoomById,
     getUserBookings,
     createBooking,
     cancelBooking,
     getRecentGuestsForRoom,
+    getAllBookingsAdmin,
     loading
   };
 

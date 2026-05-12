@@ -13,8 +13,17 @@ const Home = lazy(() => import('./pages/Home'));
 const Rooms = lazy(() => import('./pages/Rooms'));
 const RoomDetails = lazy(() => import('./pages/RoomDetails'));
 const Login = lazy(() => import('./pages/Login'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const Register = lazy(() => import('./pages/Register'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const Experiences = lazy(() => import('./pages/Experiences'));
+const SpecialOffers = lazy(() => import('./pages/SpecialOffers'));
+const AboutUs = lazy(() => import('./pages/AboutUs'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 
 // Loading Fallback
 const PageLoader = () => (
@@ -58,6 +67,7 @@ const AppContent = () => {
             <Route path="/rooms" element={<Rooms />} />
             <Route path="/room/:id" element={<RoomDetails />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/register" element={<Register />} />
             <Route 
               path="/dashboard" 
@@ -67,6 +77,21 @@ const AppContent = () => {
                 </ProtectedRoute>
               } 
             />
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route path="/experiences" element={<Experiences />} />
+            <Route path="/offers" element={<SpecialOffers />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/cancellation-policy" element={<CancellationPolicy />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
           </Routes>
         </Suspense>
       </main>

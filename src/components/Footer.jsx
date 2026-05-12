@@ -42,9 +42,9 @@ const Footer = () => {
             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <li><Link to="/" className="footer-link">Home</Link></li>
               <li><Link to="/rooms" className="footer-link">Our Rooms</Link></li>
-              <li><Link to="/" className="footer-link">Experiences</Link></li>
-              <li><Link to="/" className="footer-link">Special Offers</Link></li>
-              <li><Link to="/" className="footer-link">About Us</Link></li>
+              <li><Link to="/experiences" className="footer-link">Experiences</Link></li>
+              <li><Link to="/offers" className="footer-link">Special Offers</Link></li>
+              <li><Link to="/about" className="footer-link">About Us</Link></li>
             </ul>
           </div>
 
@@ -52,10 +52,10 @@ const Footer = () => {
           <div className="footer-links">
             <h4 style={{ marginBottom: '1.5rem', fontFamily: 'var(--font-sans)', fontSize: '1.1rem', fontWeight: 600 }}>Support</h4>
             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li><Link to="/" className="footer-link">FAQ</Link></li>
-              <li><Link to="/" className="footer-link">Cancellation Policy</Link></li>
-              <li><Link to="/" className="footer-link">Privacy Policy</Link></li>
-              <li><Link to="/" className="footer-link">Terms of Service</Link></li>
+              <li><Link to="/faq" className="footer-link">FAQ</Link></li>
+              <li><Link to="/cancellation-policy" className="footer-link">Cancellation Policy</Link></li>
+              <li><Link to="/privacy" className="footer-link">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="footer-link">Terms of Service</Link></li>
             </ul>
           </div>
 
@@ -96,7 +96,7 @@ const Footer = () => {
           </p>
           <div className="text-muted" style={{ fontSize: '0.875rem', display: 'flex', gap: '1rem' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>English (US)</span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>$ USD</span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>₹ INR</span>
           </div>
         </div>
       </div>

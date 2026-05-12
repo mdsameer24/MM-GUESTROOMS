@@ -82,7 +82,7 @@ const RoomDetails = () => {
           <div className="flex justify-between items-end mb-4">
             <h1 style={{ margin: 0, fontSize: '2.5rem' }}>{room.name}</h1>
             <div className="text-right">
-              <span className="text-gold" style={{ fontSize: '2rem', fontWeight: 600, fontFamily: 'var(--font-serif)' }}>${room.price}</span>
+              <span className="text-gold" style={{ fontSize: '2rem', fontWeight: 600, fontFamily: 'var(--font-serif)' }}>₹{room.price}</span>
               <span className="text-muted">/night</span>
             </div>
           </div>
@@ -178,7 +178,7 @@ const RoomDetails = () => {
                   <div className="booking-summary mb-6">
                     <div className="flex justify-between mb-2">
                       <span className="text-muted">Total Amount</span>
-                      <span className="text-gold font-bold" style={{ fontSize: '1.25rem' }}>${calculateTotal()}</span>
+                      <span className="text-gold font-bold" style={{ fontSize: '1.25rem' }}>₹{calculateTotal()}</span>
                     </div>
                   </div>
                 )}

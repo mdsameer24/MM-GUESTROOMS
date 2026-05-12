@@ -58,11 +58,31 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
   };
 
+  const forgotPassword = async (email) => {
+    try {
+      const response = await apiClient.post('/auth/forgot-password', { email });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to process request');
+    }
+  };
+
+  const resetPassword = async (token, newPassword) => {
+    try {
+      const response = await apiClient.post('/auth/reset-password', { token, newPassword });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to reset password');
+    }
+  };
+
   const value = {
     user,
     login,
     register,
     logout,
+    forgotPassword,
+    resetPassword,
     loading
   };
 

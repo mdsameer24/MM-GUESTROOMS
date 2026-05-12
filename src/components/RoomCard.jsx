@@ -47,7 +47,7 @@ const RoomCard = memo(({ room }) => {
             <MapPin size={12} /> {room.location}
           </span>
           <div className="room-price">
-            <span className="room-price-val">${room.price}</span>
+            <span className="room-price-val">₹{room.price}</span>
             <span style={{ color: 'var(--text-muted)' }}> night</span>
           </div>
         </div>

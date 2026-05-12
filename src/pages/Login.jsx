@@ -9,8 +9,10 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
   
-  const { login } = useAuth();
+  const { login, forgotPassword } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,6 +32,24 @@ const Login = () => {
     }
   };
 
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      setError('Please enter your email address');
+      return;
+    }
+    setIsLoading(true);
+    try {
+      await forgotPassword(email);
+      setResetSent(true);
+      setError('');
+    } catch (err) {
+      setError(err.message || 'Failed to process password reset');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="animate-fade-in container flex justify-center items-center" style={{ minHeight: 'calc(100vh - 160px)', padding: '4rem 1.5rem' }}>
       <div className="card glass-panel" style={{ width: '100%', maxWidth: '400px', padding: '3rem 2rem' }}>
@@ -37,11 +57,21 @@ const Login = () => {
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
             <Hotel className="text-gold" size={40} />
           </div>
-          <h2 className="font-serif">Welcome Back</h2>
-          <p className="text-muted">Sign in to your MM Guest Rooms account</p>
+          <h2 className="font-serif">{isForgotPassword ? 'Reset Password' : 'Welcome Back'}</h2>
+          <p className="text-muted">{isForgotPassword ? 'Enter your email to receive a reset link' : 'Sign in to your MM Guest Rooms account'}</p>
         </div>
 
-        <form onSubmit={handleLogin}>
+        {resetSent ? (
+          <div className="text-center animate-fade-in">
+            <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: 'rgba(46, 204, 113, 0.1)', color: '#2ecc71', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
+              <Mail size={30} />
+            </div>
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Check your email</h3>
+            <p className="text-muted mb-6">If an account exists for <strong>{email}</strong>, we have sent password reset instructions.</p>
+            <button onClick={() => { setIsForgotPassword(false); setResetSent(false); setEmail(''); }} className="btn btn-outline" style={{ width: '100%' }}>Back to Login</button>
+          </div>
+        ) : (
+        <form onSubmit={isForgotPassword ? handleResetPassword : handleLogin} className="animate-fade-in">
           <div className="form-group">
             <label className="form-label">Email Address</label>
             <div style={{ position: 'relative' }}>
@@ -60,8 +90,12 @@ const Login = () => {
             </div>
           </div>
           
-          <div className="form-group mb-6">
-            <label className="form-label">Password</label>
+          {!isForgotPassword && (
+          <div className="form-group mb-6 animate-fade-in">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+              <label className="form-label" style={{ marginBottom: 0 }}>Password</label>
+              <button type="button" onClick={() => { setIsForgotPassword(true); setError(''); }} style={{ background: 'none', border: 'none', color: 'var(--primary-gold)', fontSize: '0.85rem', cursor: 'pointer', padding: 0 }}>Forgot password?</button>
+            </div>
             <div style={{ position: 'relative' }}>
               <div style={{ position: 'absolute', top: '50%', left: '1rem', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}>
                 <Lock size={18} />
@@ -85,6 +119,7 @@ const Login = () => {
               </button>
             </div>
           </div>
+          )}
 
           {error && <p className="error-text text-center mb-4">{error}</p>}
 
@@ -94,15 +129,24 @@ const Login = () => {
             style={{ width: '100%', padding: '0.875rem' }}
             disabled={isLoading}
           >
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            {isLoading ? (isForgotPassword ? 'Sending...' : 'Signing in...') : (isForgotPassword ? 'Send Reset Link' : 'Sign In')}
           </button>
         </form>
+        )}
 
+        {!resetSent && (
         <div className="text-center mt-6">
-          <p className="text-muted" style={{ fontSize: '0.9rem' }}>
-            Don't have an account? <Link to="/register" className="text-gold" style={{ fontWeight: 500 }}>Create one</Link>
-          </p>
+          {isForgotPassword ? (
+            <button onClick={() => { setIsForgotPassword(false); setError(''); }} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '0.9rem', cursor: 'pointer' }}>
+              Back to Login
+            </button>
+          ) : (
+            <p className="text-muted" style={{ fontSize: '0.9rem' }}>
+              Don't have an account? <Link to="/register" className="text-gold" style={{ fontWeight: 500 }}>Create one</Link>
+            </p>
+          )}
         </div>
+        )}
       </div>
     </div>
   );

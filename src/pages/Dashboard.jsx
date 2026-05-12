@@ -84,7 +84,7 @@ const Dashboard = () => {
                         <p className="text-muted" style={{ fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                           {new Date(booking.checkIn).toLocaleDateString()} &mdash; {new Date(booking.checkOut).toLocaleDateString()}
                         </p>
-                        <p className="text-gold font-bold">${booking.totalAmount}</p>
+                        <p className="text-gold font-bold">₹{booking.totalAmount}</p>
                       </div>
 
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between', minWidth: '120px' }}>

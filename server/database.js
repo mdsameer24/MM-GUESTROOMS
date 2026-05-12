@@ -21,9 +21,27 @@ function initializeDatabase() {
         name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
+        isAdmin BOOLEAN DEFAULT 0,
+        resetToken TEXT,
+        resetTokenExpiry DATETIME,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    // Add isAdmin column to existing users if they don't have it
+    db.run(`
+      ALTER TABLE users ADD COLUMN isAdmin BOOLEAN DEFAULT 0
+    `, (err) => {
+      // Ignore error if column already exists
+    });
+
+    // Add resetToken columns to existing users if they don't have it
+    db.run(`
+      ALTER TABLE users ADD COLUMN resetToken TEXT
+    `, () => {});
+    db.run(`
+      ALTER TABLE users ADD COLUMN resetTokenExpiry DATETIME
+    `, () => {});
 
     // Rooms Table
     db.run(`

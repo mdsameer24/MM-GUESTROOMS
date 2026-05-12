@@ -146,6 +146,9 @@ img {
 @media (min-width: 1024px) { .room-grid { grid-template-columns: repeat(3, 1fr); } }
 
 .room-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background-color: var(--surface-color);
   border-radius: var(--border-radius-lg);
   overflow: hidden;

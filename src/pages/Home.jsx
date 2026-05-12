@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Star, Clock, Shield } from 'lucide-react';
 import { useBooking } from '../context/BookingContext';
+import { useAuth } from '../context/AuthContext';
 import RoomCard from '../components/RoomCard';
 import SkeletonCard from '../components/SkeletonCard';
 
 const Home = () => {
   const { filteredRooms } = useBooking();
+  const { user } = useAuth();
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   useEffect(() => {
@@ -134,18 +136,20 @@ const Home = () => {
                 <Link to="/rooms" className="btn btn-primary" style={{ padding: '1.25rem', fontSize: '1.1rem', borderRadius: '50px', fontWeight: 600, letterSpacing: '1px', boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)' }}>
                   Explore Rooms
                 </Link>
-                <Link to="/register" className="btn btn-outline" style={{ padding: '1.25rem', fontSize: '1.1rem', borderRadius: '50px', color: '#fff', borderColor: 'rgba(255,255,255,0.3)', fontWeight: 500, letterSpacing: '1px' }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
-                    e.currentTarget.style.borderColor = '#fff';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
-                  }}
-                >
-                  Create Account
-                </Link>
+                {!user && (
+                  <Link to="/register" className="btn btn-outline" style={{ padding: '1.25rem', fontSize: '1.1rem', borderRadius: '50px', color: '#fff', borderColor: 'rgba(255,255,255,0.3)', fontWeight: 500, letterSpacing: '1px' }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                      e.currentTarget.style.borderColor = '#fff';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+                    }}
+                  >
+                    Create Account
+                  </Link>
+                )}
               </motion.div>
             </div>
 

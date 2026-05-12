@@ -51,6 +51,11 @@ const Navbar = () => {
 
             {user ? (
               <div className="flex items-center gap-4">
+                {user.isAdmin && (
+                  <Link to="/admin" className="nav-link text-gold" style={{ border: '1px solid var(--primary-gold)', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>
+                    Admin
+                  </Link>
+                )}
                 <Link to="/dashboard" className="flex items-center gap-2 nav-link">
                   <User size={18} />
                   <span>{user.name}</span>
@@ -86,6 +91,11 @@ const Navbar = () => {
             
             {user ? (
               <>
+                {user.isAdmin && (
+                  <Link to="/admin" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 text-gold">
+                    Admin Dashboard
+                  </Link>
+                )}
                 <Link to="/dashboard" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2">
                   <User size={18} /> Dashboard
                 </Link>
